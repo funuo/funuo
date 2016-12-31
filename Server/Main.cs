@@ -486,7 +486,7 @@ namespace Server
 
 			Console.WriteLine("RandomImpl: {0} ({1})", RandomImpl.Type.Name, RandomImpl.IsHardwareRNG ? "Hardware" : "Software");
 
-			while( !ScriptCompiler.Compile( m_Debug, m_Cache ) )
+			/*while( !ScriptCompiler.Compile( m_Debug, m_Cache ) )
 			{
 				Console.WriteLine( "Scripts: One or more scripts failed to compile or no script files were found." );
 				
@@ -497,14 +497,16 @@ namespace Server
 				
 				if( Console.ReadKey( true ).Key != ConsoleKey.R )
 					return;
-			}
+			}*/
 
-			ScriptCompiler.Invoke( "Configure" );
+
+			//TODO:  sith and/or daleron
+			//ScriptCompiler.Invoke( "Configure" );
 			
 			Region.Load();
 			World.Load();
 
-			ScriptCompiler.Invoke( "Initialize" );
+			//ScriptCompiler.Invoke( "Initialize" );
 
 			MessagePump messagePump = m_MessagePump = new MessagePump();
 

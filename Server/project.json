@@ -1,6 +1,9 @@
 {
     "version": "1.0.0-*",
     "buildOptions": {
+	"define": [
+	    "NewAsyncSockets"
+	],
 	"debugType": "portable",
 	"emitEntryPoint": true,
 	"allowUnsafe": true

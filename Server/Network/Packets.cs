@@ -2500,7 +2500,13 @@ namespace Server.Network
 
 	private void WritePacked( PacketWriter src )
 	{
-	    byte[] buffer = src.UnderlyingStream.GetBuffer(); //MemoryStream.GetBuffer no longer exists in .net core
+	    ArraySegment<byte> segment;
+	    
+	    if( !src.UnderlyingStream.TryGetBuffer( out segment ) ){ //MemoryStream.GetBuffer no longer exists in .net core
+		throw new Exception("Failed to get underlying buffer!");
+	    }
+
+	    byte[] buffer = segment.Array;
 	    int length = (int) src.Length; // returns m_Stream.Length (of type long) which is the length in bytes
 
 	    if ( length == 0 )
@@ -4178,10 +4184,17 @@ namespace Server.Network
 
 	    if ( disabled != 0 )
 	    {
+		ArraySegment<byte> segment;
+		byte[] hashbuffer;
 
+		if( !m_Stream.UnderlyingStream.TryGetBuffer(out segment) ){
+		    throw new Exception("Unable to get the underlying buffer!");
+		}
+		hashbuffer = segment.Array;
+		
 		m_Stream.UnderlyingStream.Flush();
 
-		byte[] hashCode = System.Security.Cryptography.MD5.Create().ComputeHash( m_Stream.UnderlyingStream.GetBuffer(), 0, (int) m_Stream.UnderlyingStream.Length );
+		byte[] hashCode = System.Security.Cryptography.MD5.Create().ComputeHash( hashbuffer, 0, (int) m_Stream.UnderlyingStream.Length );
 		byte[] buffer = new byte[28];
 
 		for ( int i = 0; i < count; ++i )
@@ -4270,10 +4283,19 @@ namespace Server.Network
 		//if ( m_MD5Provider == null )
 		//    m_MD5Provider = new System.Security.Cryptography.MD5CryptoServiceProvider();
 
+		byte[] hashbuffer;
+		ArraySegment<byte> segment;
+		
+		if( !m_Stream.UnderlyingStream.TryGetBuffer(out segment) ){
+		    throw new Exception("Failed to get underlying buffer!");
+		}
+		
+		hashbuffer = segment.Array; // fingers crossed --sith
+		
 		m_Stream.UnderlyingStream.Flush();
 
 		// trygetbuffer()
-		byte[] hashCode = System.Security.Cryptography.MD5.Create().ComputeHash( m_Stream.UnderlyingStream.GetBuffer(), 0, (int) m_Stream.UnderlyingStream.Length );
+		byte[] hashCode = System.Security.Cryptography.MD5.Create().ComputeHash( hashbuffer, 0, (int) m_Stream.UnderlyingStream.Length );
 		byte[] buffer = new byte[28];
 
 		for ( int i = 0; i < count; ++i )
@@ -4728,7 +4750,13 @@ namespace Server.Network
 
 	    MemoryStream ms = m_Stream.UnderlyingStream;
 
-	    m_CompiledBuffer = ms.GetBuffer();
+	    ArraySegment<byte> segment;
+	    
+	    if( !ms.TryGetBuffer(out segment) ){
+		throw new Exception("Unable to get the underlying buffer!");
+	    }
+	    m_CompiledBuffer = segment.Array;
+	    
 	    int length = (int)ms.Length;
 
 	    if ( compress ) {
