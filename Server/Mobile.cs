@@ -9962,7 +9962,7 @@ namespace Server
 						try {
 						    using (StreamWriter op = new StreamWriter(new FileStream("delta-recursion.log", FileMode.Append))) {
 								op.WriteLine("# {0}", DateTime.UtcNow);
-								op.WriteLine(new System.Exception().StackTrace());
+								op.WriteLine(new System.Exception().StackTrace);
 								op.WriteLine();
 							}
 						} catch { }
