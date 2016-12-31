@@ -69,12 +69,10 @@ namespace Server
 
 		public static string Intern( string str )
 		{
-			if ( str == null )
-				return null;
-			else if ( str.Length == 0 )
-				return String.Empty;
-
-			return String.Intern( str );
+		    //sure bud
+		    // .net core has no string.intern
+		    // whoever wrote this is silly
+			return str;
 		}
 
 		public static void Intern( ref string str )
@@ -627,16 +625,16 @@ namespace Server
 
 		public static int GetAddressValue( IPAddress address )
 		{
-#pragma warning disable 618
-			return (int)address.Address;
-#pragma warning restore 618
+		    #pragma warning disable 618
+		    return (int)address.Address;
+		    #pragma warning restore 618
 		}
 
 		public static long GetLongAddressValue( IPAddress address )
 		{
-#pragma warning disable 618
-			return address.Address;
-#pragma warning restore 618
+		    #pragma warning disable 618
+		    return address.Address;
+		    #pragma warning restore 618
 		}
 		#endregion
 

@@ -4177,12 +4177,10 @@ namespace Server.Network
 
 			if ( disabled != 0 )
 			{
-				if ( m_MD5Provider == null )
-					m_MD5Provider = new System.Security.Cryptography.MD5CryptoServiceProvider();
 
 				m_Stream.UnderlyingStream.Flush();
 
-				byte[] hashCode = m_MD5Provider.ComputeHash( m_Stream.UnderlyingStream.GetBuffer(), 0, (int) m_Stream.UnderlyingStream.Length );
+				byte[] hashCode = System.Security.Cryptography.MD5.Create().ComputeHash( m_Stream.UnderlyingStream.GetBuffer(), 0, (int) m_Stream.UnderlyingStream.Length );
 				byte[] buffer = new byte[28];
 
 				for ( int i = 0; i < count; ++i )
@@ -4201,8 +4199,6 @@ namespace Server.Network
 				m_Stream.Write( hashCode, 0, hashCode.Length );
 			}
 		}
-
-		private static System.Security.Cryptography.MD5CryptoServiceProvider m_MD5Provider;
 
 		private static CharacterListFlags m_AdditionalFlags;
 
@@ -4275,7 +4271,7 @@ namespace Server.Network
 
 				m_Stream.UnderlyingStream.Flush();
 
-				byte[] hashCode = m_MD5Provider.ComputeHash( m_Stream.UnderlyingStream.GetBuffer(), 0, (int) m_Stream.UnderlyingStream.Length );
+				byte[] hashCode = System.Security.Cryptography.MD5.Create().ComputeHash( m_Stream.UnderlyingStream.GetBuffer(), 0, (int) m_Stream.UnderlyingStream.Length );
 				byte[] buffer = new byte[28];
 
 				for ( int i = 0; i < count; ++i )
@@ -4295,7 +4291,6 @@ namespace Server.Network
 			}
 		}
 
-		private static System.Security.Cryptography.MD5CryptoServiceProvider m_MD5Provider;
 	}
 
 	public sealed class ClearWeaponAbility : Packet
@@ -4416,11 +4411,11 @@ namespace Server.Network
 			}
 		}
 
-		public ServerInfo( string name, int fullPercent, TimeZone tz, IPEndPoint address )
+		public ServerInfo( string name, int fullPercent, int tzOffset, IPEndPoint address )
 		{
 			m_Name = name;
 			m_FullPercent = fullPercent;
-			m_TimeZone = tz.GetUtcOffset( DateTime.Now ).Hours;
+			m_TimeZone = tzOffset;
 			m_Address = address;
 		}
 	}
