@@ -38,6 +38,7 @@ using Server.Mobiles;
 using Server.Network;
 using Server.Prompts;
 using Server.Targeting;
+using System.Reflection;
 
 namespace Server
 {
@@ -6676,7 +6677,7 @@ namespace Server
 
 			if ( ns != null ) {
 				foreach ( Gump gump in ns.Gumps ) {
-					if ( type.IsAssignableFrom( gump.GetType() ) ) {
+				    if ( System.Reflection.IntrospectionExtensions.GetTypeInfo(type).IsAssignableFrom( gump.GetType() ) ) {
 						return gump;
 					}
 				}
