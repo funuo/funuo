@@ -4738,10 +4738,10 @@ namespace Server.Network
 
 				if (length <= 0) {
 					Console.WriteLine("Warning: Compression buffer overflowed on packet 0x{0:X2} ('{1}') (length={2})", m_PacketID, GetType().Name, length);
-					using (StreamWriter op = new StreamWriter("compression_overflow.log", true))
+					using (StreamWriter op = new StreamWriter(new FileStream("compression_overflow.log", FileMode.Append)))
 					{
 						op.WriteLine("{0} Warning: Compression buffer overflowed on packet 0x{1:X2} ('{2}') (length={3})", DateTime.UtcNow, m_PacketID, GetType().Name, length);
-						op.WriteLine(new System.Diagnostics.StackTrace());
+						op.WriteLine(new System.Exception().StackTrace);
 					}
 				} else {
 					m_CompiledLength = length;
