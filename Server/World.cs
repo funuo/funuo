@@ -710,9 +710,9 @@ namespace Server {
 	    Console.WriteLine( message );
 
 	    try {
-		using ( StreamWriter op = new StreamWriter( "world-save-errors.log", true ) ) {
+		using ( StreamWriter op = new StreamWriter( new FileStream("world-save-errors.log", FileMode.Append) ) ) {
 		    op.WriteLine( "{0}\t{1}", DateTime.UtcNow, message );
-		    op.WriteLine( new StackTrace( 2 ).ToString() );
+		    op.WriteLine( new System.Exception().StackTrace );
 		    op.WriteLine();
 		}
 	    } catch {

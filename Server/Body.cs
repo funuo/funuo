@@ -43,7 +43,7 @@ namespace Server
 		{
 			if ( File.Exists( "Data/bodyTable.cfg" ) )
 			{
-				using ( StreamReader ip = new StreamReader( "Data/bodyTable.cfg" ) )
+			    using ( StreamReader ip = new StreamReader( new FileStream("Data/bodyTable.cfg", FileMode.Open) ) )
 				{
 					m_Types = new BodyType[0x1000];
 

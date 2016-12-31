@@ -1737,7 +1737,7 @@ namespace Server.Items
 				return;
 			}
 
-			using ( StreamReader reader = new StreamReader( path ) )
+			using ( StreamReader reader = new StreamReader( new FileStream(path, FileMode.Open)))
 			{
 				string line;
 

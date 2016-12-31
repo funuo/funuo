@@ -867,7 +867,7 @@ namespace Server
 			Console.Write( "Regions: Loading..." );
 
 			XmlDocument doc = new XmlDocument();
-			doc.Load( System.IO.Path.Combine( Core.BaseDirectory, "Data/Regions.xml" ) );
+			doc.Load( new FileStream(System.IO.Path.Combine( Core.BaseDirectory, "Data/Regions.xml" ), FileMode.Open) );
 
 			XmlElement root = doc["ServerRegions"];
 

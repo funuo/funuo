@@ -3034,13 +3034,13 @@ namespace Server
 				SetFlag( ImplFlag.InQueue, true );
 
 				if (_processing) {
-					try {
-						using (StreamWriter op = new StreamWriter("delta-recursion.log", true)) {
-							op.WriteLine("# {0}", DateTime.UtcNow);
-							op.WriteLine(new System.Diagnostics.StackTrace());
-							op.WriteLine();
-						}
-					} catch { }
+				    try {
+					using (StreamWriter op = new StreamWriter( new FileStream("delta-recursion.log", FileMode.Append))) {
+					    op.WriteLine("# {0}", DateTime.UtcNow);
+					    op.WriteLine(new System.Diagnostics.StackTrace());
+					    op.WriteLine();
+					}
+				    } catch { }
 				} else {
 					m_DeltaQueue.Add(this);
 				}
@@ -3058,13 +3058,13 @@ namespace Server
 				SetFlag( ImplFlag.InQueue, false );
 
 				if (_processing) {
-					try {
-						using (StreamWriter op = new StreamWriter("delta-recursion.log", true)) {
-							op.WriteLine("# {0}", DateTime.UtcNow);
-							op.WriteLine(new System.Diagnostics.StackTrace());
-							op.WriteLine();
-						}
-					} catch { }
+				    try {
+					using (StreamWriter op = new StreamWriter( new FileStream("delta-recursion.log", FileMode.Append))) {
+					    op.WriteLine("# {0}", DateTime.UtcNow);
+					    op.WriteLine(new System.Diagnostics.StackTrace());
+					    op.WriteLine();
+					}
+				    } catch { }
 				} else {
 					m_DeltaQueue.Remove( this );
 				}
