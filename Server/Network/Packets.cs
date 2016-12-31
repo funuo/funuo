@@ -4682,11 +4682,11 @@ namespace Server.Network
 
 							try
 							{
-								using (StreamWriter op = new StreamWriter("net_opt.log", true))
-								{
-									op.WriteLine("Redundant compile for packet {0}, use Acquire() and Release()", this.GetType());
-									op.WriteLine(new System.Diagnostics.StackTrace());
-								}
+							    using (StreamWriter op = new StreamWriter(new FileStream("net_opt.log", FileMode.Append)))
+							    {
+								op.WriteLine("Redundant compile for packet {0}, use Acquire() and Release()", this.GetType());
+								op.WriteLine(new System.Exception().StackTrace);
+							    }
 							}
 							catch
 							{
