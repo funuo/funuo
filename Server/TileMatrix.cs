@@ -808,7 +808,7 @@ namespace Server
 
 	public void Close()
 	{
-	    m_Reader.Close();
+	    m_Reader.Dispose();
 	}
     }
 }

@@ -113,7 +113,7 @@ namespace Server
 			    matrix.SetLandBlock( x, y, tiles );
 			}
 					
-			indexReader.Close();
+			indexReader.Dispose();
 
 			return count;
 		    }

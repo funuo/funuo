@@ -400,10 +400,10 @@ namespace Server {
 			    }
 			}
 
-			tdbReader.Close();
+			tdbReader.Dispose();
 		    }
 
-		    idxReader.Close();
+		    idxReader.Dispose();
 		}
 	    } else {
 		m_Mobiles = new Dictionary<Serial, Mobile>();
@@ -449,10 +449,10 @@ namespace Server {
 			    }
 			}
 
-			tdbReader.Close();
+			tdbReader.Dispose();
 		    }
 
-		    idxReader.Close();
+		    idxReader.Dispose();
 		}
 	    } else {
 		m_Items = new Dictionary<Serial, Item>();
@@ -478,7 +478,7 @@ namespace Server {
 			    guilds.Add( new GuildEntry( guild, pos, length ) );
 		    }
 
-		    idxReader.Close();
+		    idxReader.Dispose();
 		}
 	    }
 
@@ -743,7 +743,7 @@ namespace Server {
 		    idxWriter.Write( e.Length );
 		}
 
-		idxWriter.Close();
+		idxWriter.Dispose();
 	    }
 	}
 
