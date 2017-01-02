@@ -211,11 +211,20 @@ namespace Server.Network
 
 		m_Stream.SetLength( m_Stream.Length + size );
 
+		ArraySegment<byte> segment;
+		byte[] buf;
+		
+		if( !m_Stream.TryGetBuffer( out segment ) ){
+		    throw new Exception("Unable to get buffer!");
+		}
+
+		buf = segment.Array;
+
 		if ( length >= size )
-		    m_Stream.Position += Encoding.ASCII.GetBytes( value, 0, size, m_Stream.GetBuffer(), (int)m_Stream.Position );
+		    m_Stream.Position += Encoding.ASCII.GetBytes( value, 0, size, buf, (int)m_Stream.Position );
 		else
 		{
-		    Encoding.ASCII.GetBytes( value, 0, length, m_Stream.GetBuffer(), (int)m_Stream.Position );
+		    Encoding.ASCII.GetBytes( value, 0, length, buf, (int)m_Stream.Position );
 		    m_Stream.Position += size;
 		}
 
@@ -271,7 +280,16 @@ namespace Server.Network
 
 		m_Stream.SetLength( m_Stream.Length + ( ( length + 1 ) * 2 ) );
 
-		m_Stream.Position += Encoding.Unicode.GetBytes( value, 0, length, m_Stream.GetBuffer(), (int)m_Stream.Position );
+		ArraySegment<byte> segment;
+		byte[] buf;
+		
+		if( !m_Stream.TryGetBuffer( out segment ) ){
+		    throw new Exception("Unable to get buffer!");
+		}
+
+		buf = segment.Array; //sure hope the array segment covers the entire underlying array --sith
+		
+		m_Stream.Position += Encoding.Unicode.GetBytes( value, 0, length, buf, (int)m_Stream.Position );
 		m_Stream.Position += 2;
 
 		/*byte[] buffer = Encoding.Unicode.GetBytes( value );
@@ -300,11 +318,20 @@ namespace Server.Network
 
 		m_Stream.SetLength( m_Stream.Length + size );
 
+		ArraySegment<byte> segment;
+		byte[] buf;
+		
+		if( !m_Stream.TryGetBuffer( out segment ) ){
+		    throw new Exception("Unable to get buffer!");
+		}
+
+		buf = segment.Array;
+
 		if ( ( length * 2 ) >= size )
-		    m_Stream.Position += Encoding.Unicode.GetBytes( value, 0, length, m_Stream.GetBuffer(), (int)m_Stream.Position );
+		    m_Stream.Position += Encoding.Unicode.GetBytes( value, 0, length, buf, (int)m_Stream.Position );
 		else
 		{
-		    Encoding.Unicode.GetBytes( value, 0, length, m_Stream.GetBuffer(), (int)m_Stream.Position );
+		    Encoding.Unicode.GetBytes( value, 0, length, buf, (int)m_Stream.Position );
 		    m_Stream.Position += size;
 		}
 
@@ -338,7 +365,16 @@ namespace Server.Network
 
 		m_Stream.SetLength( m_Stream.Length + ( ( length + 1 ) * 2 ) );
 
-		m_Stream.Position += Encoding.BigEndianUnicode.GetBytes( value, 0, length, m_Stream.GetBuffer(), (int)m_Stream.Position );
+		ArraySegment<byte> segment;
+		byte[] buf;
+		
+		if( !m_Stream.TryGetBuffer( out segment ) ){
+		    throw new Exception("Unable to get buffer!");
+		}
+
+		buf = segment.Array;
+
+		m_Stream.Position += Encoding.BigEndianUnicode.GetBytes( value, 0, length, buf, (int)m_Stream.Position );
 		m_Stream.Position += 2;
 
 		/*byte[] buffer = Encoding.BigEndianUnicode.GetBytes( value );
@@ -367,11 +403,20 @@ namespace Server.Network
 
 		m_Stream.SetLength( m_Stream.Length + size );
 
+		ArraySegment<byte> segment;
+		byte[] buf;
+		
+		if( !m_Stream.TryGetBuffer( out segment ) ){
+		    throw new Exception("Unable to get buffer!");
+		}
+
+		buf = segment.Array;
+
 		if ( ( length * 2 ) >= size )
-		    m_Stream.Position += Encoding.BigEndianUnicode.GetBytes( value, 0, length, m_Stream.GetBuffer(), (int)m_Stream.Position );
+		    m_Stream.Position += Encoding.BigEndianUnicode.GetBytes( value, 0, length, buf, (int)m_Stream.Position );
 		else
 		{
-		    Encoding.BigEndianUnicode.GetBytes( value, 0, length, m_Stream.GetBuffer(), (int)m_Stream.Position );
+		    Encoding.BigEndianUnicode.GetBytes( value, 0, length, buf, (int)m_Stream.Position );
 		    m_Stream.Position += size;
 		}
 

@@ -452,8 +452,8 @@ namespace Server
 			Version ver = m_Assembly.GetName().Version;
 
 			// Added to help future code support on forums, as a 'check' people can ask for to it see if they recompiled core or not
-			Console.WriteLine("RunUO - [https://github.com/runuo/] Version {0}.{1}.{2}.{3}", ver.Major, ver.Minor, ver.Build, ver.Revision);
-			Console.WriteLine("Core: Running on .NET Framework Version {0}.{1}.{2}", Environment.Version.Major, Environment.Version.Minor, Environment.Version.Build);
+			Console.WriteLine("FunUO - [https://github.com/funuo/] Version {0}.{1}.{2}.{3}", ver.Major, ver.Minor, ver.Build, ver.Revision);
+			//Console.WriteLine("Core: Running on .NET Core Version {0}.{1}.{2}", Environment.Version.Major, Environment.Version.Minor, Environment.Version.Build);
 
 			string s = Arguments;
 
